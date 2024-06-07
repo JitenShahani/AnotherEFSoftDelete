@@ -5,15 +5,15 @@ subscriber1.SetComment("EF is fun");
 Subscriber subscriber2 = new() { Name = "Jacob" };
 subscriber2.SetComment("Entity Framework is easy to learn but hard to master");
 
-context.Subscribers.Add(subscriber1);
-context.Subscribers.Add(subscriber2);
+context.Set<Subscriber>().Add(subscriber1);
+context.Set<Subscriber>().Add(subscriber2);
 context.SaveChanges();
 
-Subscriber subscriber = context.Subscribers.AsTracking().Single(s => s.Name == "Kelly");
-context.Subscribers.Remove(subscriber);
+Subscriber subscriber = context.Set<Subscriber>().AsTracking().Single(s => s.Name == "Kelly");
+context.Set<Subscriber>().Remove(subscriber);
 context.SaveChanges();
 
-List<Subscriber> subscribers = [.. context.Subscribers];
+List<Subscriber> subscribers = [.. context.Set<Subscriber>()];
 
 WriteLine("\nFiltered Subscribers");
 foreach (Subscriber sub in subscribers)
@@ -21,7 +21,7 @@ foreach (Subscriber sub in subscribers)
 	WriteLine($"{sub.Name}, IsDeleted: {sub.DeletedOn.HasValue}");
 }
 
-List<Subscriber> allSubscribers = [..context.Subscribers.IgnoreQueryFilters()];
+List<Subscriber> allSubscribers = [..context.Set<Subscriber>().IgnoreQueryFilters()];
 
 WriteLine("\nUnfiltered Subscribers");
 foreach (Subscriber sub in allSubscribers)
@@ -29,7 +29,7 @@ foreach (Subscriber sub in allSubscribers)
 	WriteLine($"{sub.Name}, IsDeleted: {sub.DeletedOn.HasValue}");
 }
 
-var data = context.Subscribers.IgnoreQueryFilters().Select(s => new
+var data = context.Set<Subscriber>().IgnoreQueryFilters().Select(s => new
 {
 	s.Name,
 	Comment = EF.Property<string>(s, "_comment"),
