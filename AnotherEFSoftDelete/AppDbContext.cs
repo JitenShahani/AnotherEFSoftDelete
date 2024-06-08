@@ -12,33 +12,18 @@ public class AppDbContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		// Group statements based  on entity
+		// Group statements based  on entities
 		modelBuilder.Entity<Subscriber>(builder =>
 		{
-			builder.HasQueryFilter(subscriber => !subscriber.DeletedOn.HasValue);
-
-			// Field Property
+			// Create a Column for the field _comment
 			builder.Property<string>("_comment")
 			.HasColumnName("Comment");
 
-			// Shadow Property
+			// Create a Shadow Column
 			builder.Property<DateTime>("CreatedOn");
+
+			builder.HasQueryFilter(subscriber => !subscriber.DeletedOn.HasValue);
 		});
-
-		// modelBuilder
-		// 	.Entity<Subscriber>()
-		// 	.HasQueryFilter(subscriber => !subscriber.DeletedOn.HasValue);
-
-		// Field Property
-		// modelBuilder
-		// 	.Entity<Subscriber>()
-		// 	.Property<string>("_comment")
-		// 	.HasColumnName("Comment");
-
-		// Shadow Property
-		// modelBuilder
-		// 	.Entity<Subscriber>()
-		// 	.Property<DateTime>("CreatedOn");
 	}
 
 	public DbSet<Subscriber> Subscribers { get; set; }
