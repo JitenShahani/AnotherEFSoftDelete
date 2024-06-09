@@ -16,13 +16,16 @@ public class AppDbContext : DbContext
 		modelBuilder.Entity<Subscriber>(builder =>
 		{
 			// Create a Column for the field _comment
-			builder.Property<string>("_comment")
-			.HasColumnName("Comment");
+			builder
+				.Property<string>("_comment")
+				.HasColumnName("Comment");
 
 			// Create a Shadow Column
-			builder.Property<DateTime>("CreatedOn");
+			builder
+				.Property<DateTime>("CreatedOn");
 
-			builder.HasQueryFilter(subscriber => !subscriber.DeletedOn.HasValue);
+			builder
+				.HasQueryFilter(subscriber => !subscriber.DeletedOn.HasValue);
 		});
 	}
 
