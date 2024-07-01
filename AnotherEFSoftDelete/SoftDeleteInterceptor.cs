@@ -1,4 +1,10 @@
-﻿namespace AnotherEFSoftDelete;
+﻿// List of EF Interceptors
+// IInterceptor
+// DbCommandInterceptor		-	IDbCommandInterceptor
+// DbConnectionInterceptor	-	IDbConnectionInterceptor
+// DbTransactionInterceptor	-	IDbTransactionInterceptor
+
+namespace AnotherEFSoftDelete;
 
 public class SoftDeleteInterceptor : SaveChangesInterceptor
 {
